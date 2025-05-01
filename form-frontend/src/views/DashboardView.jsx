@@ -143,6 +143,27 @@ function DashboardView() {
       ],
     };
 
+    // Prepare data for the "¿Es un bot?" pie chart
+    const botDistribution = attendees.reduce(
+      (acc, attendee) => {
+        attendee.you_are_a_bot ? acc.bots++ : acc.humans++;
+        return acc;
+      },
+      { bots: 0, humans: 0 }
+    );
+
+    const botData = {
+      labels: ['Bots 🤖', 'Humanos 👤'],
+      datasets: [
+        {
+          data: [botDistribution.bots, botDistribution.humans],
+          backgroundColor: ['rgba(128, 0, 128, 0.7)', 'rgba(50, 205, 50, 0.7)'],
+          borderColor: ['rgba(128, 0, 128, 1)', 'rgba(50, 205, 50, 1)'],
+          borderWidth: 1,
+        },
+      ],
+    };
+
     // Prepare data for arrival time bar chart
     const timeSlots = {};
     
@@ -214,6 +235,7 @@ function DashboardView() {
     return {
       bringData,
       hackathonData,
+      botData,
       arrivalTimeData,
       pieOptions,
       barOptions
@@ -300,6 +322,13 @@ function DashboardView() {
                   <h3>Participación en Hackathon</h3>
                   <div className="chart-wrapper">
                     {chartData && <Pie data={chartData.hackathonData} options={chartData.pieOptions} />}
+                  </div>
+                </div>
+                
+                <div className="chart-card">
+                  <h3>¿Es un bot?</h3>
+                  <div className="chart-wrapper">
+                    {chartData && <Pie data={chartData.botData} options={chartData.pieOptions} />}
                   </div>
                 </div>
                 

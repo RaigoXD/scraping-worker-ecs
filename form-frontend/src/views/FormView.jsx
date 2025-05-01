@@ -41,15 +41,7 @@ function FormView() {
 
 
         if (error) throw error;
-
-        if (existingSubmissions && existingSubmissions.length > 0) {
-          setAlreadySubmitted(true);
-          setPreviousSubmission(existingSubmissions[0]);
-          setMessage({ 
-            text: '¡Ya has enviado un formulario anteriormente!', 
-            type: 'info' 
-          });
-        }
+        
       } catch (error) {
         console.error('Error fetching IP address or checking submission:', error);
         // Set a default value if IP cannot be fetched
@@ -79,16 +71,10 @@ function FormView() {
     setMessage({ text: '', type: '' });
 
     try {
-      // Convert radio button value to boolean if necessary
-      const dataToSubmit = {
-        ...formData,
-        you_are_a_bot: formData.you_are_a_bot === 'Yes' ? true : false
-      };
-
       // Include the IP address in the submission
       const { error } = await supabase
         .from('form-submitted')
-        .insert([dataToSubmit]);
+        .insert([formData]);
 
       if (error) throw error;
 
@@ -233,30 +219,16 @@ function FormView() {
             />
           </div>
           
-          <div className="form-group radio">
-            <p>¿Eres un bot?</p>
-            <div className="radio-options">
-              <label>
-                <input
-                  type="radio"
-                  name="you_are_a_bot"
-                  value="Yes"
-                  checked={formData.you_are_a_bot === true}
-                  onChange={() => setFormData(prev => ({...prev, you_are_a_bot: true}))}
-                />
-                Sí
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="you_are_a_bot"
-                  value="No"
-                  checked={formData.you_are_a_bot === false}
-                  onChange={() => setFormData(prev => ({...prev, you_are_a_bot: false}))}
-                />
-                No
-              </label>
-            </div>
+          <div className="form-group checkbox">
+            <label>
+              <input
+                type="checkbox"
+                name="you_are_a_bot"
+                checked={formData.you_are_a_bot}
+                onChange={handleChange}
+              />
+              ¿Eres un bot?
+            </label>
           </div>
           
           <button type="submit" disabled={loading}>
