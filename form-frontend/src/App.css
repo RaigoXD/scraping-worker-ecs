@@ -1,0 +1,217 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0;
+  width: 100%;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Modern minimalist navbar inspired by Apple HIG */
+.navbar {
+  background-color: #f9fafb;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  height: 60px;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.navbar-container {
+  max-width: 1200px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-brand {
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+  color: #111827;
+}
+
+.navbar-brand span {
+  position: relative;
+}
+
+.navbar-brand span::after {
+  content: "";
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background-color: #111827;
+  bottom: 1px;
+  right: -6px;
+}
+
+.navbar-menu {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  height: 100%;
+}
+
+.navbar-menu .nav-link {
+  color: #4b5563;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0 0.5rem;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  transition: color 0.15s ease;
+}
+
+.navbar-menu .nav-link:hover {
+  color: #111827;
+}
+
+.navbar-menu .nav-link:focus-visible {
+  outline: 2px solid rgba(59, 130, 246, 0.5);
+  outline-offset: -2px;
+  border-radius: 4px;
+}
+
+.navbar-menu .nav-link.active {
+  color: #111827;
+  font-weight: 600;
+}
+
+.navbar-menu .nav-link.active::after {
+  content: "";
+  position: absolute;
+  width: calc(100% - 1rem);
+  height: 2px;
+  background-color: #111827;
+  bottom: 0;
+  left: 0.5rem;
+  border-top-left-radius: 1px;
+  border-top-right-radius: 1px;
+}
+
+/* Mobile menu toggle button */
+.mobile-menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 16px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1100;
+}
+
+.mobile-menu-toggle span {
+  width: 100%;
+  height: 1.5px;
+  background-color: #111827;
+  transition: all 0.25s ease;
+  border-radius: 1px;
+}
+
+/* Animated hamburger menu */
+.mobile-menu-toggle.is-active span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.mobile-menu-toggle.is-active span:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-menu-toggle.is-active span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Estilos generales para la aplicación */
+.app-content {
+  flex-grow: 1;
+  padding: 1.5rem;
+  animation: fadein 0.3s ease-in-out;
+}
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Media queries para responsividad */
+@media (max-width: 768px) {
+  .navbar-container {
+    padding: 0 1rem;
+  }
+  
+  .mobile-menu-toggle {
+    display: flex;
+  }
+  
+  .navbar-menu {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.2s ease;
+    opacity: 0;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  
+  .navbar-menu.is-active {
+    max-height: 200px;
+    opacity: 1;
+  }
+  
+  .navbar-menu .nav-link {
+    width: 100%;
+    height: 50px;
+    padding: 0 1.5rem;
+    justify-content: flex-start;
+    border-top: 1px solid rgba(0, 0, 0, 0.03);
+    font-size: 1rem;
+  }
+  
+  .navbar-menu .nav-link.active::after {
+    display: none;
+  }
+  
+  .navbar-menu .nav-link.active {
+    background-color: rgba(0, 0, 0, 0.02);
+    font-weight: 600;
+  }
+}
+
+/* Slide-down animation for mobile menu */
+@keyframes slideDown {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.navbar-menu.is-active {
+  animation: slideDown 0.25s ease forwards;
+}
