@@ -14,7 +14,7 @@ The job is then processed by a scraping container running in **AWS ECS Fargate**
 
 ## 🧩 Architecture Diagram
 
-![Architecture](./docs/aws-scraper-architecture.png)
+![Architecture](https://raw.githubusercontent.com/RaigoXD/scraping-worker-ecs/refs/heads/main/assets/aws-scrapper-architecture.drawio.png)
 
 ## 🔧 Architecture Components
 
